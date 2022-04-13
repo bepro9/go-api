@@ -19,8 +19,8 @@ func main() {
 	// Health route
 
 	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Health Check Route... Working")
-	})
+		fmt.Fprint(w, "Health check route... Working")
+	}).Methods("GET")
 
 	// MiddleWare handle -- Source code renders
 
