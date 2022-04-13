@@ -17,6 +17,12 @@ func main() {
 
 	router := mux.NewRouter()
 
+	// Health Check Route
+	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Health check route... Working")
+	})
+
+
 	// MiddleWare handle -- Source code renders
 
 	router.HandleFunc("/panic/", panicDemo)
