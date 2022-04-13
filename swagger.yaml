@@ -1,0 +1,117 @@
+swagger: "2.0"
+info:
+  description: Prime Project
+  title: Prime Project
+  version: 1.0.0
+schemes:
+- http
+host: localhost:4000
+basePath: /
+consumes:
+- application/json
+definitions:
+  ObjectID:
+    items:
+      format: uint8
+      type: integer
+    title: ObjectID is the BSON ObjectID type.
+    type: array
+    x-go-package: go.mongodb.org/mongo-driver/bson/primitive
+  Prime:
+    properties:
+      _id:
+        $ref: '#/definitions/ObjectID'
+      movie:
+        description: Movie Name
+        type: string
+        x-go-name: Movie
+      watched:
+        description: Watched check
+        type: boolean
+        x-go-name: Watched
+    required:
+    - movie
+    - watched
+    type: object
+    x-go-package: go-mongo/model
+    
+paths:
+  /api/movies:
+    get:
+      summary: Get all movie from Database
+      description: ""
+      operationId: getAllMovie
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: prime type response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Prime'
+            
+  /api/movie:
+    post:
+      summary: Insert Movie in database
+      operationId: postMovie
+      parameters:
+      - in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/Prime'
+      responses:
+        "200":
+          description: Data Inserted in DB
+          
+  /api/movie/{id}:
+
+    get:
+      summary: Get movie by id
+      operationId: getMovie
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: prime type response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Prime'
+
+    put:
+      summary: Updates the movie watched status
+      operationId: updateWatchedStatus
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ObjectID Response
+          
+    delete:
+      summary: Delete movie by id
+      operationId: deleteMovie
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ObjectID Response
+          
+  /api/deleteallmovie:
+    delete:
+      summary: Delete All movie
+      operationId: deleteAllMovie
+      responses:
+        "200":
+          description: Delete Count response
