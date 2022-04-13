@@ -10,12 +10,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
-
 func main() {
 	fmt.Println("Go-MongoAPI")
 	fmt.Println("Server is getting stated...")
 
 	router := mux.NewRouter()
+
+	// Health route
+
+	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Health Check Route... Working")
+	})
 
 	// MiddleWare handle -- Source code renders
 
@@ -24,7 +29,7 @@ func main() {
 
 	router.HandleFunc("/api/movies", controller.GetMyAllMovies).Methods("GET")
 	router.HandleFunc("/api/movie/{id}", controller.GetAMovieById).Methods("GET")
-	
+
 	router.HandleFunc("/api/movie", controller.CreateMovie).Methods("POST")
 	router.HandleFunc("/api/movie/{id}", controller.MarkAsWatched).Methods("PUT")
 
