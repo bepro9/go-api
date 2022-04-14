@@ -5,10 +5,9 @@ WORKDIR /build
 
 RUN export GO111MODULE=on
 
-# RUN cd /build && git clone https://github.com/bepro9/go-api.git
 COPY . ./
 
-RUN go mod tidy && go build -o /docker-gs-ping
+RUN go build -o /docker-gs-ping
 
 EXPOSE 4000
 
